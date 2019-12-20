@@ -33,5 +33,27 @@ namespace API.Controllers
             var activity = await _mediator.Send(new Details.Query{Id = id});
             return Ok(activity);
         }
+    
+        // POST api/activities
+        [HttpPost]
+        public async Task<ActionResult<Unit>> Post([FromBody] Create.Command command)
+        {
+            return await _mediator.Send(command);
+        }
+
+        // PUT api/activities
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Unit>> Put(Guid id, [FromBody] Edit.Command command)
+        {
+            command.Id = id;
+            return await _mediator.Send(command);
+        }
+
+        // DELETE api/activities
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Unit>> Delete(Guid id)
+        {
+            return await _mediator.Send(new Delete.Command{Id = id});
+        }
     }
 }
